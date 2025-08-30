@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심장호흡물리치료학 | 종합 인포그래픽 가이드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; letter-spacing: -0.025em; }
+        .section-card { scroll-margin-top: 100px; }
+        .lecture-card { transition: all 0.3s ease; border-left-width: 5px; }
+        .lecture-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .tip-icon-shape { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0; }
+        .speaker-icon { cursor: pointer; transition: color 0.2s; }
+        .speaker-icon:hover { color: #00A1E4; }
+        .sticky-nav { 
+            position: -webkit-sticky; 
+            position: sticky; 
+            top: 0; 
+            z-index: 40;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        #loading-modal, #alert-modal { transition: opacity 0.3s ease; }
+        .spinner { border-top-color: #00A1E4; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-button { transition: background-color 0.2s ease; }
+        .accordion-button.open { background-color: #e2e8f0; }
+        .accordion-button.open + .accordion-content {
+            max-height: 1500px;
+        }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .nav-link.active { color: #00A1E4; font-weight: 700; background-color: #eff6ff; }
+        .gradient-text {
+            background: linear-gradient(to right, #005B7F, #00A1E4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .ai-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .ai-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 120, 170, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden opacity-0">
+        <div class="spinner border-4 border-gray-200 rounded-full w-16 h-16"></div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="alert-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden opacity-0">
+        <div class="bg-white rounded-lg shadow-xl p-6 m-4 max-w-sm w-full text-center">
+            <p id="alert-message" class="text-slate-700 mb-4"></p>
+            <button id="alert-close-btn" class="bg-[#00A1E4] text-white font-bold py-2 px-6 rounded-lg hover:bg-[#0084B4] transition-colors">확인</button>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header id="page-top" class="text-center mb-12 py-10 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl shadow-lg">
+            <h1 class="text-4xl md:text-6xl font-black text-[#003C52] mb-3 tracking-tight">심장호흡물리치료학</h1>
+            <p class="text-lg md:text-xl text-[#005B7F] font-medium">안산대학교 물리치료학과 심경섭 교수 | 종합 학습 가이드</p>
+        </header>
+
+        <nav id="main-nav" class="sticky-nav bg-white/90 backdrop-blur-sm shadow-lg rounded-full p-2 mb-16">
+            <div class="flex flex-wrap justify-center gap-2 text-sm">
+                <a href="#foundations" class="nav-link px-4 py-2 hover:bg-slate-100 rounded-full transition-all duration-300 font-medium">I. 기초</a>
+                <a href="#assessment" class="nav-link px-4 py-2 hover:bg-slate-100 rounded-full transition-all duration-300 font-medium">II. 평가</a>
+                <a href="#management" class="nav-link px-4 py-2 hover:bg-slate-100 rounded-full transition-all duration-300 font-medium">III. 질환 관리</a>
+                <a href="#rehab" class="nav-link px-4 py-2 hover:bg-slate-100 rounded-full transition-all duration-300 font-medium">IV. 재활</a>
+                <a href="#formulas" class="nav-link px-4 py-2 hover:bg-slate-100 rounded-full transition-all duration-300 font-medium">✨핵심 공식</a>
+                <a href="#gemini-features" class="nav-link px-4 py-2 bg-[#00A1E4] text-white rounded-full transition-all duration-300 font-bold">✨AI 임상지원</a>
+            </div>
+        </nav>
+
+        <main class="space-y-16">
+            
+            <section id="intro" class="section-card bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 md:p-8 bg-gradient-to-r from-[#005B7F] to-[#003C52] text-white">
+                    <h2 class="text-3xl font-bold">임상 결정 과정 (Clinical Decision Making)</h2>
+                </div>
+                <div class="p-6 md:p-8">
+                    <p class="mb-8 text-slate-600">성공적인 환자 관리는 체계적이고 반복적인 임상 결정 과정에 기반합니다. 이는 단순한 선형적 절차가 아닌, 각 단계가 서로에게 영향을 미치는 역동적인 순환 모델입니다.</p>
+                    <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="flowchart-step text-center p-4 bg-slate-100 rounded-lg w-full md:w-1/5 border-b-4 border-transparent hover:border-blue-400"><h3 class="font-bold text-lg">1. 사정</h3><p class="text-sm">정보 수집</p></div>
+                        <div class="text-2xl font-bold text-slate-400 hidden md:block">&rarr;</div><div class="text-2xl font-bold text-slate-400 md:hidden">&darr;</div>
+                        <div class="flowchart-step text-center p-4 bg-slate-100 rounded-lg w-full md:w-1/5 border-b-4 border-transparent hover:border-blue-400"><h3 class="font-bold text-lg">2. 분석</h3><p class="text-sm">문제 식별</p></div>
+                        <div class="text-2xl font-bold text-slate-400 hidden md:block">&rarr;</div><div class="text-2xl font-bold text-slate-400 md:hidden">&darr;</div>
+                        <div class="flowchart-step text-center p-4 bg-slate-100 rounded-lg w-full md:w-1/5 border-b-4 border-transparent hover:border-blue-400"><h3 class="font-bold text-lg">3. 계획</h3><p class="text-sm">목표 설정</p></div>
+                        <div class="text-2xl font-bold text-slate-400 hidden md:block">&rarr;</div><div class="text-2xl font-bold text-slate-400 md:hidden">&darr;</div>
+                        <div class="flowchart-step text-center p-4 bg-slate-100 rounded-lg w-full md:w-1/5 border-b-4 border-transparent hover:border-blue-400"><h3 class="font-bold text-lg">4. 중재</h3><p class="text-sm">치료 시행</p></div>
+                        <div class="text-2xl font-bold text-slate-400 hidden md:block">&rarr;</div><div class="text-2xl font-bold text-slate-400 md:hidden">&darr;</div>
+                        <div class="flowchart-step text-center p-4 bg-slate-100 rounded-lg w-full md:w-1/5 border-b-4 border-transparent hover:border-blue-400"><h3 class="font-bold text-lg">5. 평가</h3><p class="text-sm">결과 확인</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="lecture-overview" class="text-center">
+                 <h2 class="text-3xl font-bold text-[#003C52] mb-8 gradient-text">강의 개요</h2>
+                 <div id="lecture-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                 </div>
+            </section>
+
+            <!-- 강의 상세 내용 섹션 (동적 생성) -->
+            <div id="content-sections" class="space-y-16"></div>
+            
+            <section id="formulas" class="section-card bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 md:p-8 bg-gradient-to-r from-[#005B7F] to-[#003C52] text-white">
+                    <h2 class="text-3xl font-bold">✨ 주요 임상 공식 및 계산법</h2>
+                </div>
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#003C52] mb-2">목표 심박수 (Karvonen 공식)</h3>
+                        <p class="font-mono text-sm bg-slate-200 p-2 rounded">THR = (HRmax - HRrest) × 강도(%) + HRrest</p>
+                        <ul class="text-xs mt-2 space-y-1">
+                            <li><strong>THR</strong> (Target Heart Rate): 목표 심박수</li>
+                            <li><strong>HRmax</strong> (Maximal Heart Rate): 최대 심박수 (추정치: 220-나이)</li>
+                            <li><strong>HRrest</strong> (Resting Heart Rate): 안정 시 심박수</li>
+                        </ul>
+                        <p class="text-xs mt-2"><strong>적용:</strong> 여유 심박수(HRR)를 고려하여 개인 맞춤형 유산소 운동 강도를 설정합니다.</p>
+                        <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-3 rounded-r-lg text-xs">
+                           <p><strong class="font-bold">💡 팁:</strong> 베타차단제 복용 환자는 GXT로 측정한 HRmax를 사용하거나, 운동자각도(RPE)를 주된 강도 지표로 사용하세요.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#003C52] mb-2">심근부담도 (RPP)</h3>
+                        <p class="font-mono text-sm bg-slate-200 p-2 rounded">RPP = HR × SBP</p>
+                         <ul class="text-xs mt-2 space-y-1">
+                            <li><strong>RPP</strong> (Rate Pressure Product): 심근부담도</li>
+                            <li><strong>HR</strong> (Heart Rate): 심박수</li>
+                            <li><strong>SBP</strong> (Systolic Blood Pressure): 수축기 혈압</li>
+                        </ul>
+                        <p class="text-xs mt-2"><strong>적용:</strong> 심근 산소소비량의 간접 지표. 협심증 발현 시의 RPP를 확인하여 안전한 운동 상한선으로 설정합니다.</p>
+                        <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-3 rounded-r-lg text-xs">
+                           <p><strong class="font-bold">💡 팁:</strong> 훈련을 통해 동일한 운동 강도에서 RPP가 감소했다면 심장 효율이 향상되었음을 의미합니다.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 hover:shadow-md transition-shadow">
+                        <h3 class="font-bold text-lg text-[#003C52] mb-2">체질량지수 (BMI)</h3>
+                        <p class="font-mono text-sm bg-slate-200 p-2 rounded">BMI = 체중(kg) / 신장(m)²</p>
+                         <ul class="text-xs mt-2 space-y-1">
+                            <li><strong>BMI</strong> (Body Mass Index): 체질량지수</li>
+                        </ul>
+                        <p class="text-xs mt-2"><strong>적용:</strong> 비만도 평가의 기본 지표. 18.5 미만(저체중), 18.5-22.9(정상), 23-24.9(과체중), 25 이상(비만) [아시아-태평양 기준].</p>
+                        <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-3 rounded-r-lg text-xs">
+                           <p><strong class="font-bold">💡 팁:</strong> BMI는 근육량과 체지방량을 구분하지 못하므로, 허리둘레나 생체전기저항법(BIA) 검사 결과를 함께 해석하는 것이 더 정확합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gemini-features" class="section-card bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-6 md:p-8 bg-gradient-to-r from-[#00A1E4] to-[#0084B4] text-white">
+                    <h2 class="text-3xl font-bold">✨ AI 환자 맞춤 임상 지원 도구</h2>
+                </div>
+                <div class="p-6 md:p-8">
+                    <!-- Removed API Key Input Section -->
+                    <div class="p-6 mb-8 bg-indigo-50 border-l-4 border-indigo-500 text-indigo-800 rounded-lg shadow-md">
+                         <div class="flex items-center mb-2">
+                             <i class="fas fa-rocket text-indigo-600 text-xl mr-3"></i>
+                             <h3 class="font-bold text-lg">AI 기능이 활성화되었습니다!</h3>
+                         </div>
+                         <p class="text-sm text-indigo-700">이 웹사이트는 Vercel Functions를 사용하여 안전하게 AI 기능을 제공합니다. 여러분의 API 키는 서버에 안전하게 보관되어 있으니 안심하고 사용하세요.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Feature 1: Patient Handout -->
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-xl text-[#003C52] mb-4 flex items-center">
+                                <span class="text-2xl mr-2">📄</span> AI 환자 교육자료
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="diagnosis-select" class="block text-sm font-medium text-slate-700">1. 진단명 선택</label>
+                                    <select id="diagnosis-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-[#00A1E4] focus:border-[#00A1E4] sm:text-sm rounded-md">
+                                        <option>심근경색증 후 (Post-MI)</option>
+                                        <option>관상동맥우회술 후 (Post-CABG)</option>
+                                        <option>안정형 협심증 (Stable Angina)</option>
+                                        <option>만성 심부전 (Chronic Heart Failure)</option>
+                                        <option>말초동맥질환 (PVD)</option>
+                                        <option>만성폐쇄성폐질환 (COPD)</option>
+                                        <option>천식 (Asthma)</option>
+                                        <option>폐섬유증 (Pulmonary Fibrosis)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="topic-input" class="block text-sm font-medium text-slate-700">2. 교육 주제 입력</label>
+                                    <input type="text" id="topic-input" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="예: 에너지 보존 전략">
+                                </div>
+                                <button id="generate-handout-btn" class="ai-button w-full bg-[#0084B4] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#005B7F] flex items-center justify-center gap-2">
+                                    ✨ <span>교육자료 생성</span>
+                                </button>
+                            </div>
+                            <div id="handout-result" class="mt-4 p-4 bg-white rounded-md border border-slate-200 text-sm whitespace-pre-wrap min-h-[100px]"></div>
+                        </div>
+                        <!-- Feature 2: Exercise Prescription -->
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-xl text-[#003C52] mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🏋️</span> AI 운동처방 추천
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="prog-diagnosis-select" class="block text-sm font-medium text-slate-700">1. 진단명</label>
+                                    <select id="prog-diagnosis-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-[#00A1E4] focus:border-[#00A1E4] sm:text-sm rounded-md">
+                                        <option>심근경색증 후 (Post-MI)</option>
+                                        <option>관상동맥우회술 후 (Post-CABG)</option>
+                                        <option>안정형 협심증 (Stable Angina)</option>
+                                        <option>만성 심부전 (Chronic Heart Failure)</option>
+                                        <option>말초동맥질환 (PVD)</option>
+                                        <option>만성폐쇄성폐질환 (COPD)</option>
+                                        <option>천식 (Asthma)</option>
+                                        <option>폐섬유증 (Pulmonary Fibrosis)</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="current-level-input" class="block text-sm font-medium text-slate-700">2. 현재 METs</label>
+                                        <input type="number" id="current-level-input" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" value="3">
+                                    </div>
+                                    <div>
+                                        <label for="last-rpe-input" class="block text-sm font-medium text-slate-700">3. 지난 세션 RPE</label>
+                                        <input type="number" id="last-rpe-input" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" value="12" min="6" max="20">
+                                    </div>
+                                </div>
+                                <button id="suggest-progression-btn" class="ai-button w-full bg-[#00A1E4] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#0084B4] flex items-center justify-center gap-2">
+                                    ✨ <span>맞춤 운동처방 추천</span>
+                                </button>
+                            </div>
+                            <div id="progression-result" class="mt-4 p-4 bg-white rounded-md border border-slate-200 text-sm whitespace-pre-wrap min-h-[100px]"></div>
+                        </div>
+                        <!-- Feature 3: Postural Drainage -->
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-xl text-[#003C52] mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🧘</span> AI 체위배담법 추천
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="pd-segment-select" class="block text-sm font-medium text-slate-700">1. 목표 폐 구역 선택</label>
+                                    <select id="pd-segment-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-slate-300 focus:outline-none focus:ring-[#00A1E4] focus:border-[#00A1E4] sm:text-sm rounded-md">
+                                        <option>오른위엽 꼭대기구역</option>
+                                        <option>오른위엽 뒤구역</option>
+                                        <option>오른위엽 앞구역</option>
+                                        <option>오른중간엽</option>
+                                        <option>오른아래엽 위구역</option>
+                                        <option>오른아래엽 앞바닥구역</option>
+                                        <option>오른아래엽 가쪽바닥구역</option>
+                                        <option>오른아래엽 뒤바닥구역</option>
+                                        <option>왼위엽 꼭대기뒤구역</option>
+                                        <option>왼위엽 앞구역</option>
+                                        <option>왼위엽 혀구역</option>
+                                        <option>왼아래엽 위구역</option>
+                                        <option>왼아래엽 앞안쪽바닥구역</option>
+                                        <option>왼아래엽 가쪽바닥구역</option>
+                                        <option>왼아래엽 뒤바닥구역</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="pd-conditions-input" class="block text-sm font-medium text-slate-700">2. 환자 특이사항 (금기증 고려)</label>
+                                    <input type="text" id="pd-conditions-input" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="예: 두개내압 상승, 불안정 협심증">
+                                </div>
+                                <button id="suggest-pd-btn" class="ai-button w-full bg-[#003C52] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#005B7F] flex items-center justify-center gap-2">
+                                    ✨ <span>자세 추천받기</span>
+                                </button>
+                            </div>
+                            <div id="pd-result" class="mt-4 p-4 bg-white rounded-md border border-slate-200 text-sm whitespace-pre-wrap min-h-[100px]"></div>
+                        </div>
+                        <!-- NEW Feature 4: Case Analyzer -->
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-xl text-[#003C52] mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🧐</span> AI 임상 사례 분석
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="case-summary-input" class="block text-sm font-medium text-slate-700">1. 환자 사례 요약 (익명화)</label>
+                                    <textarea id="case-summary-input" rows="4" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="예: 65세 남성, COPD 진단 5년차, 6MWT 300m, 주 호소는 계단 2층 오를 때 발생하는 호흡곤란(Borg 척도 5/10)"></textarea>
+                                </div>
+                                <button id="analyze-case-btn" class="ai-button w-full bg-[#0084B4] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#005B7F] flex items-center justify-center gap-2">
+                                    ✨ <span>사례 분석하기</span>
+                                </button>
+                            </div>
+                            <div id="case-analysis-result" class="mt-4 p-4 bg-white rounded-md border border-slate-200 text-sm whitespace-pre-wrap min-h-[100px]"></div>
+                        </div>
+                        <!-- NEW Feature 5: ABGA Interpreter -->
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h3 class="font-bold text-xl text-[#003C52] mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🩸</span> AI ABGA 해석기
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label for="abga-ph" class="block text-xs font-medium text-slate-700">pH</label>
+                                        <input type="number" id="abga-ph" step="0.01" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="7.35">
+                                    </div>
+                                    <div>
+                                        <label for="abga-paco2" class="block text-xs font-medium text-slate-700">PaCO₂</label>
+                                        <input type="number" id="abga-paco2" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="40">
+                                    </div>
+                                    <div>
+                                        <label for="abga-hco3" class="block text-xs font-medium text-slate-700">HCO₃⁻</label>
+                                        <input type="number" id="abga-hco3" class="mt-1 block w-full border border-slate-300 rounded-md shadow-sm py-2 px-3" placeholder="24">
+                                    </div>
+                                </div>
+                                <button id="interpret-abga-btn" class="ai-button w-full bg-[#00A1E4] text-white font-bold py-2 px-4 rounded-lg hover:bg-[#0084B4] flex items-center justify-center gap-2">
+                                    ✨ <span>ABGA 결과 해석</span>
+                                </button>
+                            </div>
+                            <div id="abga-result" class="mt-4 p-4 bg-white rounded-md border border-slate-200 text-sm whitespace-pre-wrap min-h-[100px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-slate-500 text-sm">
+            <p>&copy; 2025 심장호흡물리치료 전문가 가이드. 본 자료는 교육 목적으로 제작되었으며, 최신 임상 가이드라인을 기반으로 합니다.</p>
+        </footer>
+    </div>
+    
+    <button id="scrollToTopBtn" class="hidden fixed bottom-8 right-8 bg-[#00A1E4] text-white text-2xl font-bold w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-[#005B7F] transition-all duration-300 z-20">
+        &uarr;
+    </button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- DATA ---
+    const lectureData = [
+        { id: 1, theme: 'foundations', title: '심폐물리치료 개론 및 심혈관계 해부학', icon: '🫀', summary: '산소 전달 경로의 개념과 심장의 구조 및 기능을 학습합니다.' },
+        { id: 2, theme: 'foundations', title: '호흡기계 해부학 및 심폐계 생리학', icon: '🫁', summary: '호흡기의 구조와 근육, 환기 및 가스 교환의 원리를 이해합니다.' },
+        { id: 3, theme: 'assessment', title: '평가 I: 병력 청취 및 신체 검진', icon: '🩺', summary: '차트 분석, 환자 면담, 시진/촉진/타진/청진 기술을 배웁니다.' },
+        { id: 4, theme: 'assessment', title: '평가 II: 진단 검사', icon: '📊', summary: 'X-ray, 폐기능검사(PFT), 동맥혈가스분석(ABGA) 등 주요 검사 결과를 해석합니다.' },
+        { id: 5, theme: 'assessment', title: '평가 III: 심전도 분석 및 운동부하검사', icon: '📈', summary: '심전도(ECG) 파형 분석, 부정맥 식별 및 운동부하검사(GXT) 원리를 이해합니다.' },
+        { id: 6, theme: 'management', title: '질환 I: 폐쇄성 폐질환', icon: '😤', summary: '만성폐쇄성폐질환(COPD)과 천식의 병태생리, 평가 및 호흡 재교육법을 다룹니다.' },
+        { id: 7, theme: 'management', title: '질환 II: 제한성 폐질환', icon: '🧱', summary: '폐섬유증 등 폐 팽창이 어려운 질환의 특징과 관리법을 배웁니다.' },
+        { id: 8, theme: 'rehab', title: '기도 청결 기법 및 호흡 운동', icon: '💨', summary: '체위배담법, 능동호흡주기법(ACBT) 등 다양한 가래 배출 기법을 훈련합니다.' },
+        { id: 9, theme: 'management', title: '질환 III: 허혈성 심질환 및 고혈압', icon: '💔', summary: '협심증, 심근경색(MI), 고혈압의 관리와 운동 처방을 학습합니다.' },
+        { id: 10, theme: 'management', title: '질환 IV: 심부전 및 심장 수술 후 관리', icon: '❤️‍🩹', summary: '심부전(HF)의 종류와 증상, 심장 수술 후 흉골 주의사항을 배웁니다.' },
+        { id: 11, theme: 'rehab', title: '심장 재활', icon: '❤️‍🔥', summary: '심장질환 환자의 회복을 돕는 단계별 재활 프로그램을 FITT-VP 원칙에 따라 이해합니다.' },
+        { id: 12, theme: 'rehab', title: '폐 재활', icon: '🚶‍♂️', summary: '만성 호흡기 질환 환자의 호흡곤란 악순환을 끊는 재활법을 배웁니다.' },
+        { id: 13, theme: 'rehab', title: '중환자실(ICU) 물리치료', icon: '🛌', summary: 'ICU 환경에서의 조기 재활 프로토콜과 안전 수칙을 학습합니다.' },
+        { id: 14, theme: 'rehab', title: '특수 환자군 관리 및 증례 연구', icon: '👶👵💝', summary: '소아, 노인, 이식 환자 등 특수 케이스와 통합 증례를 다룹니다.' }
+    ];
+
+    const contentData = {
+        1: {
+            infographic: `
+                <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 1 핵심 요약</h4>
+                <ul class="space-y-3 text-left text-sm">
+                    <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 산소 전달 경로 (Oxygen Transport Pathway) - 우리 몸의 모든 세포에 산소를 공급하는 과정. 물리치료는 이 경로의 효율을 높이는 것!</li>
+                    <li><strong class="text-[#005B7F]">🫀 심장의 구조:</strong> 4개의 방, 4개의 판막. 혈액 흐름: 전신 → 우심방/실 → 폐 → 좌심방/실 → 전신</li>
+                    <li><strong class="text-[#005B7F]">⚡ 전기 시스템:</strong> 동방결절(SA node, Sinoatrial node)에서 시작하여 심장을 규칙적으로 뛰게 함.</li>
+                </ul>
+                <div class="chart-container h-64 mt-4">
+                     <canvas id="cardiacOutputChart"></canvas>
+                </div>`,
+            details: `
+                <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 심혈관계 해부학: 심장의 구조</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>심장벽:</strong> 심장내막, 심근, 심장외막 3개 층으로 구성.</p><p><strong>4개 방과 혈액의 흐름:</strong> (전신) → 우심방 → 삼첨판막 → 우심실 → 폐동맥판막 → (폐) → 좌심방 → 승모판막 → 좌심실 → 대동맥판막 → (전신)</p></div></div>
+                <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 판막, 관상동맥 및 전도계</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>관상동맥 (Coronary Arteries):</strong> 심장 근육 자체에 혈액을 공급하는 혈관. 좌전하행지(LAD, Left Anterior Descending)와 좌회선지(LCx, Left Circumflex)가 중요.</p><p><strong>전도계:</strong> 심장의 규칙적 수축을 위한 전기 신호 전달 시스템 (SA node → 방실결절(AV node, Atrioventricular node) → His-Purkinje).</p></div></div>
+                <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                    <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">운동 시 심박출량 증가는 주로 심박수 증가에 의존하지만, 훈련된 사람은 일회박출량(SV, Stroke Volume) 증가 능력이 더 큽니다. 이는 심장이 더 효율적으로 일한다는 증거이며, 재활의 중요한 목표 중 하나입니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                </div>`
+        },
+        2: {
+            infographic: `
+                <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 2 핵심 요약</h4>
+                <ul class="space-y-3 text-left text-sm">
+                    <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 환기/관류 비율 (V/Q ratio, Ventilation/Perfusion ratio) - 공기(V)와 혈액(Q)이 폐에서 적절히 만나야 효율적인 가스 교환이 일어남. 이 균형이 깨지는 것이 폐질환의 핵심!</li>
+                    <li><strong class="text-[#005B7F]">🫁 호흡 경로:</strong> 상부(필터/히터) → 하부(가스교환).</li>
+                    <li><strong class="text-[#005B7F]">💪 호흡 근육팀:</strong> 주전 선수(가로막), 후보 선수(보조호흡근). 안정 시 날숨은 수동적 과정.</li>
+                </ul>
+                <div class="chart-container h-72 mt-4">
+                    <canvas id="lungVolumesChart"></canvas>
+                </div>`,
+            details: `
+                <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 호흡기계 해부학</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>하부 호흡기계:</strong> 기관, 기관지, 세기관지, 폐포 (공기 전도 및 가스 교환).</p><p><strong>흉막:</strong> 폐를 감싸는 두 겹의 막. 흉막강 내의 음압은 폐의 허탈을 방지.</p></div></div>
+                <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 심폐 생리학</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>환기 (Ventilation):</strong> 보일의 법칙(압력과 부피는 반비례)에 따라 흉강의 부피 변화로 공기가 이동.</p><p><strong>V/Q 관계:</strong> 사강(Dead space, V/Q↑, 예:폐색전증), 단락(Shunt, V/Q↓, 예:무기폐).</p></div></div>
+                <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">환자가 어깨를 들썩이며 숨을 쉰다면, 주호흡근인 가로막이 지쳐 보조호흡근을 과도하게 사용하고 있다는 신호일 수 있습니다. 이는 호흡 부전의 위험 징후입니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                </div>`
+        },
+        3: {
+            infographic: `
+                <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 3 핵심 요약</h4>
+                <ul class="space-y-3 text-left text-sm">
+                    <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 체계적인 평가 - 차트 → 환자 면담 → 신체 검진 순서로 정보를 종합하여 문제의 실마리를 찾는다.</li>
+                    <li><strong class="text-[#005B7F]">🔍 4대 신체 검진:</strong> 시진(👀), 촉진(✋), 타진(👆), 청진(🩺).</li>
+                    <li><strong class="text-[#005B7F]">🗣️ 주요 질문:</strong> 호흡곤란(언제, 얼마나?), 가래(색깔?), 흉통(양상?).</li>
+                </ul>
+                <div class="mt-4 p-4 bg-slate-100 rounded-lg text-sm">
+                    <h5 class="font-bold mb-2">청진 소견 예시</h5>
+                    <p><strong>나음 (Crackles/Rales):</strong> 폐렴, 심부전 시 흡기 때 '바스락' 소리.</p>
+                    <p class="mt-1"><strong>건성수포음 (Wheezes):</strong> 천식, COPD 시 호기 때 '쌕쌕' 소리.</p>
+                </div>`,
+            details: `
+                <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 평가 개요 및 차트 분석</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>평가의 중요성:</strong> 치료의 나침반. 문제 파악, 목표 설정, 중재 선택의 근거.</p><p><strong>차트 리뷰:</strong> 현병력(HPI, History of Present Illness), 과거력(PMH, Past Medical History), 사회력(SH, Social History), 약물, 검사 결과, 의사 지시 등 핵심 정보 파악.</p></div></div>
+                <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 주관적 평가 및 흉곽 신체 검진</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>주요 증상 질문:</strong> 호흡곤란(Borg 척도, 시각아날로그척도(VAS, Visual Analog Scale)), 기좌호흡, 발작성야간호흡곤란(PND, Paroxysmal Nocturnal Dyspnea), 기침 및 객담, 흉통.</p><p><strong>시진:</strong> 호흡 양상, 흉곽 모양, 보조호흡근 사용, 곤봉지(만성 저산소증의 징후).</p></div></div>
+                <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">분석 단계에서 국제 기능·장애·건강 분류(ICF, International Classification of Functioning, Disability and Health) 모델을 활용하여 환자의 손상, 활동 제한, 참여 제약을 종합적으로 파악하면, 보다 환자 중심적인 목표 설정이 가능합니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                </div>`
+        },
+        4: {
+            infographic: `
+                <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 4 핵심 요약</h4>
+                <ul class="space-y-3 text-left text-sm">
+                    <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 폐쇄성 vs. 제한성 감별 - 폐기능검사(PFT) 결과로 공기가 나가는 길(폐쇄성)의 문제인지, 폐가 펴지는 것(제한성)의 문제인지 구분.</li>
+                    <li><strong class="text-[#005B7F]">📊 PFT 패턴:</strong> 폐쇄성(FEV1/FVC &lt; 70%), 제한성(TLC &lt; 80%).</li>
+                    <li><strong class="text-[#005B7F]">🩸 ABGA 해석:</strong> pH, PaCO2, HCO3- 세 가지 수치로 환자의 산-염기 균형과 호흡 상태를 파악.</li>
+                </ul>
+                <div class="chart-container h-80 mt-4">
+                    <canvas id="diseasePatternChart"></canvas>
+                </div>`,
+            details: `
+                <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 폐기능 검사 (PFT, Pulmonary Function Test)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>폐쇄성 (Obstructive):</strong> 기도 저항 증가로 공기를 빨리 내쉬기 힘들어 1초간강제호기량(FEV1)이 노력성폐활량(FVC)보다 더 많이 감소. <strong>FEV1/FVC &lt; 70%</strong>가 진단 기준.</p><p><strong>제한성 (Restrictive):</strong> 폐 순응도 감소로 폐 용적 자체가 줄어들어 FEV1과 FVC가 모두 감소. <strong>총폐용량(TLC, Total Lung Capacity) &lt; 80%</strong>가 진단 기준.</p></div></div>
+                <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 동맥혈 가스 분석 (ABGA, Arterial Blood Gas Analysis)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg"><table class="w-full text-sm text-left">
+                    <thead class="bg-slate-200"><tr class="border-b"><th class="p-2">항목</th><th class="p-2">정상범위</th><th class="p-2">임상적 의미</th></tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2"><strong>pH</strong></td><td class="p-2">7.35-7.45</td><td class="p-2">산-염기 균형</td></tr>
+                        <tr class="border-b"><td class="p-2"><strong>PaCO₂</strong></td><td class="p-2">35-45 mmHg</td><td class="p-2">환기 상태 (호흡성)</td></tr>
+                        <tr class="border-b"><td class="p-2"><strong>HCO₃⁻</strong></td><td class="p-2">22-26 mEq/L</td><td class="p-2">대사 상태 (대사성)</td></tr>
+                        <tr><td class="p-2"><strong>PaO₂</strong></td><td class="p-2">80-100 mmHg</td><td class="p-2">산소화 상태</td></tr>
+                    </tbody>
+                </table></div></div>
+                <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">맥박산소측정기(Pulse oximetry)로 측정한 SpO₂는 동맥혈 산소포화도를 편리하게 추정할 수 있지만, 빈혈, 일산화탄소 중독, 말초 순환 부전 시에는 부정확할 수 있으므로 임상 증상과 함께 해석해야 합니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                </div>`
+        },
+        5: {
+            infographic: `
+                <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 5 핵심 요약</h4>
+                <ul class="space-y-3 text-left text-sm">
+                    <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> ST 분절의 의미 - ST 상승(경색, 응급!), ST 하강(허혈, 산소부족).</li>
+                    <li><strong class="text-[#005B7F]">📈 ECG (Electrocardiogram) 파형:</strong> P파(심방), QRS군(심실), T파(휴식).</li>
+                    <li><strong class="text-[#005B7F]">🚨 위험 부정맥:</strong> 심방세동(뇌졸중 위험), 심실빈맥(심정지 위험).</li>
+                </ul>
+                <div class="chart-container mt-2 h-[200px]">
+                     <canvas id="ecgChart"></canvas>
+                </div>
+                <div class="flex justify-center gap-2 mt-2">
+                     <button id="ecg-normal" class="px-3 py-1 bg-blue-500 text-white rounded-md text-sm">정상</button>
+                     <button id="ecg-afib" class="px-3 py-1 bg-yellow-500 text-white rounded-md text-sm">심방세동</button>
+                     <button id="ecg-vtach" class="px-3 py-1 bg-red-500 text-white rounded-md text-sm">심실빈맥</button>
+                </div>`,
+            details: `
+                <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 심전도(ECG) 분석</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>주요 부정맥:</strong> 심방세동(A-fib, 불규칙한 리듬), 심실조기수축(PVC, 넓은 QRS가 조기에 나타남), 심실빈맥(V-tach, 넓은 QRS가 빠르게 반복).</p><p><strong>심근허혈/경색:</strong> ST 분절 하강(허혈), ST 분절 상승(경색).</p></div></div>
+                <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 운동부하검사 (GXT, Graded eXercise Test)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>목적:</strong> 관상동맥질환 진단, 운동 능력 측정, 안전한 운동 처방을 위한 허혈 역치 파악.</p><p><strong>종료 기준:</strong> ST 상승/하강, 심한 흉통, 혈압 저하 등 위험 징후 시 즉시 중단.</p></div></div>
+                <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                    <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">심박출률(EF, Ejection Fraction)이 40% 미만인 환자(HFrEF)는 운동 중 혈압 반응이 둔화되거나 하강할 수 있으므로, 운동 강도를 매우 점진적으로 올려야 합니다. 운동자각도(RPE)와 증상 모니터링이 특히 중요합니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                </div>`
+        },
+         6: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 6 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 공기 포획 (Air Trapping) - 숨을 끝까지 내쉬지 못해 폐에 공기가 갇히는 현상. 만성폐쇄성폐질환(COPD) 환자의 숨이 찬 주된 이유!</li>
+                     <li><strong class="text-[#005B7F]">😤 COPD vs. 천식:</strong> COPD(비가역적 기류 제한), 천식(가역적 기도 수축).</li>
+                     <li><strong class="text-[#005B7F]">💨 필수 호흡 기술:</strong> 입술 오므리기 호흡, 가로막 호흡.</li>
+                 </ul>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 만성폐쇄성폐질환 (COPD, Chronic Obstructive Pulmonary Disease)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>병태생리:</strong> 만성 염증 → 공기 포획(Air trapping) & 과팽창(Hyperinflation).</p><p><strong>평가 소견:</strong> 술통형 가슴, 호기 시 천명음, PFT상 FEV1/FVC < 70%.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 물리치료 중재</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>호흡 재교육:</strong> 입술 오므리기 호흡(Pursed-lip breathing)은 날숨 시 기도 내 압력을 높여 기도 허탈을 막고 호흡곤란을 완화합니다.</p><p><strong>운동 치료:</strong> 유산소 운동 + 상/하지 근력 운동. 인터벌 트레이닝이 효과적.</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">COPD 환자는 폐의 과팽창으로 인해 가로막이 편평해져 기능이 저하됩니다. 앞으로 숙인 자세(forward leaning)는 가로막의 길이를 최적화하고 보조호흡근의 작용을 도와 호흡곤란을 완화시킬 수 있습니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        7: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 7 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 폐 순응도 감소 - 폐가 풍선처럼 잘 늘어나지 않고 뻣뻣해지는 것. 숨을 들이쉬기 힘든 것이 핵심 문제!</li>
+                     <li><strong class="text-[#005B7F]">🧱 제한성 vs. 폐쇄성:</strong> 제한성(들이쉬기 힘듦, 작은 폐 용적), 폐쇄성(내쉬기 힘듦, 공기 포획).</li>
+                     <li><strong class="text-[#005B7F]">💪 필수 호흡 기술:</strong> 심호흡 운동, 들숨근 훈련(IMT).</li>
+                 </ul>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 제한성 폐질환의 이해와 평가</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>정의:</strong> 폐가 뻣뻣해져(Stiff) 잘 팽창하지 못하는 질환. <strong>폐 순응도 감소</strong>가 핵심.</p><p><strong>증상:</strong> 활동 시 호흡곤란, 마른 기침, 빠르고 얕은 호흡.</p><p><strong>PFT:</strong> 총폐용량(TLC) < 80%. FEV1/FVC는 정상 또는 증가.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 물리치료 중재</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>호흡 운동:</strong> 심호흡 운동으로 뻣뻣한 폐를 스트레칭. 유발폐활량계(Incentive Spirometer) 사용.</p><p><strong>운동 치료:</strong> 운동 중 산소포화도 모니터링 필수. 저강도 인터벌 트레이닝이 효과적.</p></div></div>
+                 <div class="mt-4 bg-red-50 border-l-4 border-red-500 text-red-900 p-4 rounded-r-lg">
+                     <p class="flex items-center"><span class="tip-icon-shape bg-red-400 mr-3">⚠️</span><strong class="font-bold">주의:</strong><span class="ml-2">특발성 폐섬유증(IPF, Idiopathic Pulmonary Fibrosis) 환자는 운동 시 급격한 산소포화도 저하 위험이 높으므로, 반드시 산소 보충 요법과 함께 점진적으로 운동해야 합니다.</span></p>
+                 </div>`
+         },
+        8: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 8 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 능동호흡주기법 (ACBT, Active Cycle of Breathing Techniques) - 환자 스스로 할 수 있는 가장 효과적인 가래 배출법. '이완 → 확장 → 배출' 3단계 사이클!</li>
+                     <li><strong class="text-[#005B7F]">🛠️ 기도 청결 도구:</strong> 수동 기법(체위배담법), 능동 기법(ACBT, 허핑).</li>
+                     <li><strong class="text-[#005B7F]">💨 허핑 vs. 기침:</strong> 허핑(안경 닦듯 부드럽게), 기침(폭발적). 허핑이 기도에 부담이 적다.</li>
+                 </ul>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 체위배담법과 도수 기법</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg"><table class="min-w-full bg-white text-sm">
+                     <thead class="bg-slate-200">
+                         <tr><th class="p-2 text-left">기법</th><th class="p-2 text-left">방법 및 강도</th><th class="p-2 text-left">적용 시점</th></tr>
+                     </thead>
+                     <tbody>
+                         <tr class="border-b"><td class="p-2"><strong>타진법 (Percussion)</strong></td><td class="p-2">컵 모양의 손으로 흉벽을 <strong>약 3-5Hz (초당 3-5회)</strong>의 속도로 규칙적으로 두드림. 손목 스냅을 이용하며 통증 없는 강도로 시행.</td><td class="p-2">들숨과 날숨 내내 적용</td></tr>
+                         <tr class="border-b"><td class="p-2"><strong>진동법 (Vibration)</strong></td><td class="p-2">손을 편평하게 대고 팔과 어깨를 등척성 수축시켜 <strong>약 12-20Hz</strong>의 미세한 진동을 전달.</td><td class="p-2">날숨 시에만 적용</td></tr>
+                     </tbody>
+                 </table></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 능동적 기도 청결 기법 및 기구</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>능동 호흡주기법 (ACBT):</strong> 호흡 조절 → 흉곽 확장 운동 → 강제 호기 기법(허핑).</p><p><strong>보조 기구:</strong> 플러터(Flutter), 아카펠라(Acapella) 등 진동형 양압호기(PEP, Positive Expiratory Pressure) 기구는 날숨 시 진동과 양압을 동시에 적용하여 분비물을 효과적으로 제거합니다.</p></div></div>
+                 <div class="mt-4 bg-red-50 border-l-4 border-red-500 text-red-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-red-400 mr-3">⚠️</span><strong class="font-bold">금기증:</strong><span class="ml-2 clinical-tip-text">두개내압 상승, 심한 고혈압/저혈압, 불안정 협심증, 심한 객혈 등. 체위배담법 시행 전 반드시 금기증을 확인해야 합니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        9: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 9 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 안정성 - 안정형 협심증(예측 가능), 불안정형/심근경색(MI, Myocardial Infarction)(예측 불가, 응급!).</li>
+                     <li><strong class="text-[#005B7F]">💔 MI 진단 3요소:</strong> 증상, ECG, 혈액검사(Troponin).</li>
+                     <li><strong class="text-[#005B7F]">💪 고혈압 운동:</strong> 중강도 유산소 운동이 최고! 숨 참고 힘쓰기(발살바 메뉴버) 금지.</li>
+                 </ul>
+                 <div class="chart-container h-80 mt-4">
+                     <canvas id="lipidProfileChart"></canvas>
+                 </div>
+                 `,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 허혈성 심질환(IHD) 및 심근경색(MI)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>협심증 vs 심근경색증:</strong> 협심증은 일시적인 심근 허혈로 인한 흉통이며, 휴식이나 니트로글리세린으로 완화됩니다. 반면 심근경색증은 혈류가 완전히 차단되어 심근 괴사가 발생하는 비가역적 손상입니다. (NSTEMI/STEMI)</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 고혈압 관리와 운동</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>정의:</strong> 130/80 mmHg 이상 (Stage 1).</p><p><strong>운동 처방:</strong> 중강도 유산소 운동이 핵심. 발살바 호흡 금지. 수축기 혈압 >200mmHg 또는 이완기 혈압 >110mmHg 시 운동을 금합니다.</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">환자에게 '나쁜 콜레스테롤(LDL)은 혈관에 쓰레기를 버리는 것, 좋은 콜레스테롤(HDL)은 쓰레기를 치우는 청소부'와 같이 비유를 들어 설명하면 이해도를 높이고 생활 습관 개선의 동기를 부여할 수 있습니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        10: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 10 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 좌심부전(→폐 증상) vs. 우심부전(→전신 부종).</li>
+                     <li><strong class="text-[#005B7F]">💔 심부전(HF, Heart Failure) 관리:</strong> 매일 체중 재기! (급격한 증가는 위험 신호). NYHA 분류로 기능 평가.</li>
+                     <li><strong class="text-[#005B7F]">🔪 수술 후 규칙:</strong> 흉골 주의사항, 기침 시 흉골 지지.</li>
+                 </ul>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 심부전(Heart Failure)</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>좌심부전:</strong> 혈액이 폐에 정체 → 호흡기 증상 (호흡곤란, 기좌호흡).</p><p><strong>우심부전:</strong> 혈액이 전신에 정체 → 전신 부종 증상 (하지 부종, 경정맥 팽창).</p><p><strong>분류:</strong> 박출률 감소 심부전(HFrEF, Heart Failure with reduced Ejection Fraction) vs. 보존 심부전(HFpEF, Heart Failure with preserved Ejection Fraction).</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 심장 수술 후 물리치료</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>관상동맥우회술(CABG, Coronary Artery Bypass Graft) 후 관리:</strong> 흉골 지지 기침법 (Sternal splinting), 흉골 주의사항 (Sternal Precautions).</p><p><strong>주요 목표:</strong> 폐 합병증 예방 및 조기 이상(Early mobilization).</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">심장 수술 후 가장 중요한 첫 재활은 '걷기'가 아니라 '올바른 기침'과 '심호흡'을 통해 무기폐와 같은 폐 합병증을 예방하는 것입니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        11: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 11 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> FITT-VP 원칙 - 안전하고 효과적인 운동 처방의 기본 틀 (Frequency, Intensity, Time, Type, Volume, Progression).</li>
+                     <li><strong class="text-[#005B7F]">🛣️ 재활 로드맵:</strong> Phase I(입원) → Phase II(외래) → Phase III(유지).</li>
+                     <li><strong class="text-[#005B7F]">❤️ 안전 열쇠:</strong> 허혈 역치, 목표 심박수, 운동자각도(RPE, Rating of Perceived Exertion).</li>
+                 </ul>
+                 <div class="chart-container h-80 mt-4">
+                     <canvas id="intensitySettingChart"></canvas>
+                 </div>
+                 `,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 심장 재활의 단계와 목표</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>Phase I (입원기):</strong> 급성기 합병증 예방, 조기 이상, 퇴원 교육.</p><p><strong>Phase II (조기 외래):</strong> 의학적 감독 하 구조화된 운동, ECG 모니터링, 위험인자 관리.</p><p><strong>Phase III (유지기):</strong> 지역사회 또는 가정 기반의 장기적 건강 관리.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 운동 처방의 원리</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>위험 계층화:</strong> 미국심혈관폐재활협회(AACVPR) 기준에 따라 재활 중 심장 사건 발생 위험도(저/중/고)를 평가하여 안전 확보.</p><p><strong>FITT-VP 원칙</strong>에 따라 환자 개개인의 상태에 맞춰 운동을 처방합니다.</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">허혈 역치가 있는 환자의 경우, 운동 목표 심박수는 허혈 증상이나 ECG 변화가 나타나는 심박수보다 최소 10bpm 낮게 설정하여 안전을 확보해야 합니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        12: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 12 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 호흡곤란-비활동의 악순환 끊기. (호흡곤란 → 활동 감소 → 근육 약화 → 더 심한 호흡곤란)</li>
+                     <li><strong class="text-[#005B7F]">🚶‍♂️ 표준 검사:</strong> 6분 보행 검사 (6MWT, 6-Minute Walk Test) - 거리, 산소포화도, 호흡곤란 정도 확인.</li>
+                     <li><strong class="text-[#005B7F]">💪 운동 특징:</strong> 하지 운동(특히 대퇴사두근)이 왕! 인터벌 트레이닝, 필요시 산소 요법.</li>
+                 </ul>
+                 <div class="chart-container h-80 mt-4">
+                     <canvas id="pulmonaryRehabComponentsChart"></canvas>
+                 </div>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 폐 재활의 개요와 평가</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>핵심 목표:</strong> "호흡곤란-비활동의 악순환"을 끊는 것.</p><p><strong>평가 도구:</strong> 6분 보행 검사(6MWT), 수정된 의학연구위원회(mMRC) 호흡곤란 척도, COPD 평가 테스트(CAT), 세인트조지 호흡기 설문지(SGRQ), BODE 지수.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 폐 재활 운동 처방</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>운동 처방:</strong> 하지 운동(걷기, 자전거) 핵심. 고강도 인터벌 트레이닝(HIIT) 효과적. 특히 대퇴사두근 강화 중요.</p><p><strong>교육:</strong> 에너지 보존 전략, 호흡 조절법, 영양 상담이 운동만큼 중요합니다.</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 팁:</strong><span class="ml-2 clinical-tip-text">폐 재활은 폐를 '새것'으로 만드는 것이 아니라, 남아있는 폐 기능과 온몸의 근육을 '최고 효율'로 사용하도록 훈련시켜 호흡곤란을 덜 느끼게 하는 과정입니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         },
+        13: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 13 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 조기 재활 (Early Mobilization) - "중환자는 절대 안정"은 옛말! 빨리, 안전하게 움직이는 것이 예후를 결정.</li>
+                     <li><strong class="text-[#005B7F]">🛌 중환자실(ICU)의 적:</strong> ICU 획득 쇠약(ICU-AW, ICU-Acquired Weakness), 섬망(Delirium).</li>
+                     <li><strong class="text-[#005B7F]">🚀 재활 4단계:</strong> 관절운동 → 앉기 → 서기 → 걷기.</li>
+                 </ul>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. ICU 환경과 물리치료의 역할</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>역할:</strong> 조기 재활을 통해 부동의 합병증 예방하고 기능 회복 촉진.</p><p><strong>안전성 확인:</strong> 흡입산소농도(FiO2), 호기말양압(PEEP, Positive End-Expiratory Pressure) 등 기계환기기 설정값 확인.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 안전한 조기 재활</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>프로토콜:</strong> ABCDEF 번들을 적용한 단계적 접근 (관절운동 → 침대 걸터앉기 → 서기 → 제자리 걷기 → 보행).</p></div></div>
+                 <div class="mt-4 bg-red-50 border-l-4 border-red-500 text-red-900 p-4 rounded-r-lg">
+                     <p class="flex items-center"><span class="tip-icon-shape bg-red-400 mr-3">⚠️</span><strong class="font-bold">주의:</strong><span class="ml-2">ICU 물리치료는 항상 2인 이상 팀으로 접근하는 것이 안전하며, 시작 전과 중단 기준을 명확히 숙지해야 합니다.</span></p>
+                 </div>`
+         },
+        14: {
+             infographic: `
+                 <h4 class="text-lg font-bold mb-4 text-[#003C52]">Lecture 14 핵심 요약</h4>
+                 <ul class="space-y-3 text-left text-sm">
+                     <li><strong class="text-[#005B7F]">💡 핵심 개념:</strong> 개별화 - 모든 환자는 다르다! 환자 고유의 특징에 맞춰 치료 계획을 맞춤 설계.</li>
+                     <li><strong class="text-[#005B7F]">👶 소아:</strong> 치료는 '놀이'처럼! (비눗방울, 바람개비).</li>
+                     <li><strong class="text-[#005B7F]">👵 노인:</strong> 낙상 예방과 기능적 독립성 유지가 최우선. 파워 운동이 중요.</li>
+                     <li><strong class="text-[#005B7F]">💝 이식 환자:</strong> 심장(제신경 심장, RPE 활용), 폐(기도 청결 중요).</li>
+                 </ul>
+                 <div class="chart-container h-72 mt-4">
+                     <canvas id="geriatricExerciseFocusChart"></canvas>
+                 </div>`,
+             details: `
+                 <div class="accordion mt-2"><button class="accordion-button open w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">1. 특수 환자군 I - 소아 및 노인</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>소아:</strong> 놀이를 기반으로 한 치료 접근. 가족 교육이 중요.</p><p><strong>노인:</strong> 다중질환, 근감소증 고려. 기능적 운동(의자에서 일어서기 등)과 균형 운동, 파워 운동을 포함.</p></div></div>
+                 <div class="accordion mt-2"><button class="accordion-button w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-t-lg transition">2. 특수 환자군 II - 이식 환자</button><div class="accordion-content p-4 border border-t-0 rounded-b-lg text-sm space-y-2"><p><strong>심장 이식:</strong> 제신경 심장(Denervated heart)으로 운동 시 심박수 반응이 느림. 준비운동과 정리운동이 매우 중요하며, RPE를 운동 강도 지표로 사용.</p><p><strong>폐 이식:</strong> 기침 반사 저하로 기도 청결이 매우 중요. 면역억제제로 인한 감염 위험이 높음.</p></div></div>
+                 <div class="mt-4 bg-blue-50 border-l-4 border-[#00A1E4] text-blue-900 p-4 rounded-r-lg">
+                     <p class="flex items-start"><span class="tip-icon-shape bg-blue-400 mr-3">💡</span><strong class="font-bold">임상 진주:</strong><span class="ml-2 clinical-tip-text">최고의 심폐물리치료사는 가장 많은 기술을 아는 사람이 아니라, 눈앞의 환자에게 지금 가장 필요한 기술 하나를 정확히 적용하는 사람입니다.</span><span class="speaker-icon ml-auto text-slate-400">🔊</span></p>
+                 </div>`
+         }
+    };
+    
+    // --- DYNAMIC CONTENT GENERATION ---
+    const lectureGrid = document.getElementById('lecture-grid');
+    const contentSections = document.getElementById('content-sections');
+    let themeContainer = null;
+
+    function getThemeTitle(themeId) {
+        switch(themeId) {
+            case 'foundations': return 'I. 기초 (Foundations)';
+            case 'assessment': return 'II. 평가 (Assessment)';
+            case 'management': return 'III. 질환 관리 (Disease Management)';
+            case 'rehab': return 'IV. 재활 (Rehabilitation)';
+            default: return '';
+        }
+    }
+
+    lectureData.forEach((lecture, index) => {
+        // Create new theme section if needed
+        if (index === 0 || lectureData[index - 1].theme !== lecture.theme) {
+            const themeId = lecture.theme;
+            const themeTitle = getThemeTitle(themeId);
+            const sectionWrapper = document.createElement('section');
+            sectionWrapper.id = themeId;
+            sectionWrapper.className = "section-card";
+            sectionWrapper.innerHTML = `<h2 class="text-4xl font-bold border-b-4 border-[#00A1E4] pb-4 mb-12">${themeTitle}</h2>`;
+            contentSections.appendChild(sectionWrapper);
+            themeContainer = sectionWrapper;
+        }
+
+        // Create lecture card for the grid
+        const card = document.createElement('div');
+        const themeColor = {foundations: 'border-blue-400', assessment: 'border-green-400', management: 'border-orange-400', rehab: 'border-purple-400'}[lecture.theme];
+        card.className = `lecture-card bg-white p-4 rounded-lg shadow-md cursor-pointer ${themeColor}`;
+        card.innerHTML = `
+            <div class="flex items-center mb-2">
+                <span class="text-3xl mr-3">${lecture.icon}</span>
+                <div>
+                    <h3 class="text-md font-bold text-slate-800 leading-tight">Lec ${lecture.id}: ${lecture.title}</h3>
+                </div>
+            </div>
+            <p class="text-sm text-slate-600">${lecture.summary}</p>
+        `;
+        card.addEventListener('click', () => {
+            document.getElementById(`lecture-${lecture.id}`).scrollIntoView({ behavior: 'smooth' });
+        });
+        if(lectureGrid) lectureGrid.appendChild(card);
+
+        // Create detailed lecture content section
+        const contentSection = document.createElement('div');
+        contentSection.id = `lecture-${lecture.id}`;
+        contentSection.className = 'bg-white rounded-2xl shadow-xl overflow-hidden mb-16 section-card';
+        contentSection.innerHTML = `
+            <div class="p-6 md:p-8 bg-gradient-to-r from-[#005B7F] to-[#003C52] text-white">
+                <h3 class="text-2xl font-bold flex items-center"><span class="text-3xl mr-4">${lecture.icon}</span> Lecture ${lecture.id}: ${lecture.title}</h3>
+            </div>
+            <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="infographic-panel p-6 bg-slate-50 rounded-lg border border-slate-200">
+                    ${contentData[lecture.id] ? contentData[lecture.id].infographic : '<p>콘텐츠 준비 중입니다.</p>'}
+                </div>
+                <div class="details-panel">
+                    ${contentData[lecture.id] ? contentData[lecture.id].details : ''}
+                </div>
+            </div>
+        `;
+        if (themeContainer) themeContainer.appendChild(contentSection);
+    });
+
+    // --- INTERACTIVITY SETUP ---
+    
+    // Accordions
+    document.querySelectorAll('.accordion-button').forEach(button => {
+        button.addEventListener('click', () => {
+            button.classList.toggle('open');
+        });
+    });
+
+    // Scroll-to-Top Button
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    if (scrollToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('hidden');
+            } else {
+                scrollToTopBtn.classList.add('hidden');
+            }
+        });
+        scrollToTopBtn.addEventListener('click', () => {
+            document.getElementById('page-top').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    // Sticky Nav Hide/Show & Scroll Spy
+    const mainNav = document.getElementById('main-nav');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sectionsForSpy = Array.from(document.querySelectorAll('section[id]'));
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Hide/Show Nav
+        if (mainNav) {
+            if (scrollTop > lastScrollTop && scrollTop > 200){
+                mainNav.style.transform = 'translateY(-120%)';
+            } else {
+                mainNav.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }
+
+        // Scroll Spy
+        let current = '';
+        sectionsForSpy.forEach(section => {
+            if (section) {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) { // Offset for nav height
+                    current = section.getAttribute('id');
+                }
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    }, false);
+
+
+    // --- CHARTS ---
+    const commonChartOptions = {
+        maintainAspectRatio: false, responsive: true,
+        plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 15, padding: 10, font: { size: 12 } } } }
+    };
+    
+    const chartConfigs = [
+        { id: 'cardiacOutputChart', type: 'line', data: { labels: ['안정 시', '최대하 운동', '최대 운동'], datasets: [ { label: '심박수 (HR)', data: [70, 130, 190], borderColor: '#00A1E4', yAxisID: 'y' }, { label: '일회박출량 (SV)', data: [70, 110, 120], borderColor: '#005B7F', yAxisID: 'y1' } ] }, options: {...commonChartOptions, scales: { y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'HR (bpm)'}}, y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'SV (mL/beat)'}, grid: { drawOnChartArea: false }}}} },
+        { id: 'lungVolumesChart', type: 'bar', data: { labels: ['일회호흡량(TV)', '들숨예비량(IRV)', '날숨예비량(ERV)', '잔기량(RV)'], datasets: [{ label: '정상 성인 남성 평균 (mL)', data: [500, 3000, 1100, 1200], backgroundColor: ['#B2E8F8', '#74D2F1', '#00A1E4', '#0084B4'] }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}} },
+        { id: 'diseasePatternChart', type: 'bar', data: { labels: ['FEV1/FVC', '총폐용량 (TLC)'], datasets: [ { label: '폐쇄성 질환 (COPD)', data: [50, 120], backgroundColor: '#005B7F' }, { label: '제한성 질환 (폐섬유증)', data: [85, 70], backgroundColor: '#00A1E4' } ] }, options: {...commonChartOptions, scales: { y: { title: { display: true, text: '정상 예측치 대비 %'}}}} },
+        { id: 'lipidProfileChart', type: 'bar', data: { labels: ['총 콜레스테롤', 'LDL 콜레스테롤', 'HDL 콜레스테롤', '중성지방'], datasets: [{ label: '목표 수치 (mg/dL)', data: [200, 100, 60, 150], backgroundColor: '#0084B4', borderColor: '#005B7F', borderWidth: 1 }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}, scales: { y: { beginAtZero: true, title: { display: true, text: '수치가 낮을수록 좋음 (HDL 제외)'}}}} },
+        { id: 'intensitySettingChart', type: 'bar', data: { labels: ["Karvonen (HRR)", "최대심박수 (%HRmax)", "운동자각도 (RPE)", "Talk Test"], datasets: [{ label: '정확도 및 적용 용이성', data: [8, 6, 9, 7], backgroundColor: ['#005B7F', '#0084B4', '#00A1E4', '#74D2F1'] }] }, options: {...commonChartOptions, indexAxis: 'y', plugins: {...commonChartOptions.plugins, legend: { display: false }}, scales: {x: { max: 10, title: { display: true, text: '점수 (10점 만점)'}}}} },
+        { id: 'pulmonaryRehabComponentsChart', type: 'doughnut', data: { labels: ['운동 훈련', '교육', '행동/심리 중재', '영양 상담'], datasets: [{ data: [50, 20, 20, 10], backgroundColor: ['#005B7F', '#0084B4', '#00A1E4', '#74D2F1'] }] }, options: commonChartOptions },
+        { id: 'geriatricExerciseFocusChart', type: 'radar', data: { labels: ['지구력', '근력', '파워', '균형', '유연성', '협응력'], datasets: [{ label: '노인 운동 프로그램 중요도', data: [8, 9, 10, 10, 7, 8], backgroundColor: 'rgba(0, 161, 228, 0.2)', borderColor: '#00A1E4', pointBackgroundColor: '#00A1E4' }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}, scales: {r: {min: 0, max: 10}}} }
+    ];
+
+    chartConfigs.forEach(config => {
+        const canvas = document.getElementById(config.id);
+        if (canvas) {
+            new Chart(canvas, { type: config.type, data: config.data, options: config.options });
+        }
+    });
+
+    // Animated ECG Chart
+    const ecgCanvas = document.getElementById('ecgChart');
+    if (ecgCanvas) {
+        const ctx = ecgCanvas.getContext('2d');
+        let animationFrameId;
+        let x = 0;
+        let currentRhythm = 'normal';
+
+        const rhythms = {
+            normal: (t) => {
+                const p = Math.exp(-Math.pow(t % 100 - 10, 2) / 8) * 10;
+                const q = -Math.exp(-Math.pow(t % 100 - 28, 2) / 2) * 5;
+                const r = Math.exp(-Math.pow(t % 100 - 30, 2) / 2) * 60;
+                const s = -Math.exp(-Math.pow(t % 100 - 32, 2) / 2) * 15;
+                const t_wave = Math.exp(-Math.pow(t % 100 - 50, 2) / 18) * 20;
+                return p + q + r + s + t_wave;
+            },
+            afib: (t) => {
+                const baseline = (Math.random() - 0.5) * 5;
+                const period = 80 + Math.sin(t / 100) * 20 + Math.random() * 20;
+                const qrsTime = t % period;
+                let qrs = 0;
+                if (qrsTime < 5) {
+                    const r = Math.exp(-Math.pow(qrsTime - 1, 2) / 1) * 60;
+                    const s = -Math.exp(-Math.pow(qrsTime - 2, 2) / 1) * 15;
+                    qrs = r + s;
+                }
+                return baseline + qrs;
+            },
+            vtach: (t) => Math.sin(t / 6) * 45 + (Math.random() - 0.5) * 8
+        };
+
+        function drawEcg() {
+            const width = ecgCanvas.width;
+            const height = ecgCanvas.height;
+            const centerY = height / 2;
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, width, height);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < width; i += 10) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke(); }
+            for (let i = 0; i < height; i += 10) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(width, i); ctx.stroke(); }
+            ctx.strokeStyle = '#dc2626';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            for (let i = 0; i < width; i++) {
+                const y = centerY - rhythms[currentRhythm](x + i);
+                ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+            x += 2;
+            animationFrameId = requestAnimationFrame(drawEcg);
+        }
+
+        function setRhythm(rhythm) {
+            currentRhythm = rhythm;
+            x = 0;
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            drawEcg();
+        }
+
+        document.getElementById('ecg-normal')?.addEventListener('click', () => setRhythm('normal'));
+        document.getElementById('ecg-afib')?.addEventListener('click', () => setRhythm('afib'));
+        document.getElementById('ecg-vtach')?.addEventListener('click', () => setRhythm('vtach'));
+        drawEcg();
+    }
+    
+    // --- GEMINI API & HELPERS (MODIFIED FOR VERCEL FUNCTIONS) ---
+    const loadingModal = document.getElementById('loading-modal');
+    const alertModal = document.getElementById('alert-modal');
+    const alertMessage = document.getElementById('alert-message');
+    const alertCloseBtn = document.getElementById('alert-close-btn');
+    const ttsPlayer = new Audio();
+
+    const showLoading = () => {
+        loadingModal.classList.remove('hidden');
+        setTimeout(() => loadingModal.classList.remove('opacity-0'), 10);
+    };
+
+    const hideLoading = () => {
+        loadingModal.classList.add('opacity-0');
+        setTimeout(() => loadingModal.classList.add('hidden'), 300);
+    };
+
+    const showAlert = (message) => {
+        alertMessage.textContent = message;
+        alertModal.classList.remove('hidden');
+        setTimeout(() => alertModal.classList.remove('opacity-0'), 10);
+    };
+
+    alertCloseBtn.addEventListener('click', () => {
+        alertModal.classList.add('opacity-0');
+        setTimeout(() => alertModal.classList.add('hidden'), 300);
+    });
+
+    // --- MODIFIED API CALL FUNCTION ---
+    // 이 함수는 이제 우리 웹사이트의 '/api/gemini' 주소(우리의 비밀 점원)를 호출합니다.
+    // 더 이상 API 키를 직접 다루지 않습니다.
+    async function callOurSecureApi(apiUrl, payload) {
+        try {
+            // 미리보기 환경에서 상대 경로('/api/gemini')가 제대로 분석되지 않는 문제를 해결하기 위해
+            // 현재 페이지의 원본(origin)을 기준으로 절대 경로를 생성합니다.
+            const secureApiUrl = new URL('/api/gemini', window.location.origin);
+
+            // 우리 서버의 '/api/gemini' 경로로 API 주소와 요청 내용을 함께 보냅니다.
+            const response = await fetch(secureApiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ apiUrl, payload }),
+            });
+
+            if (!response.ok) {
+                const errorResult = await response.json();
+                throw new Error(errorResult.error || `HTTP error! status: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error("API call failed:", error);
+            // 사용자에게는 일반적인 에러 메시지를 던집니다.
+            throw new Error(`API 호출에 실패했습니다. 네트워크 연결을 확인하거나 잠시 후 다시 시도해주세요. (상세: ${error.message})`);
+        }
+    }
+
+
+    // --- AI FEATURE EVENT LISTENERS (UNCHANGED LOGIC, CHANGED API CALL) ---
+
+    // AI Handout Generator
+    document.getElementById('generate-handout-btn')?.addEventListener('click', async () => {
+        const diagnosis = document.getElementById('diagnosis-select').value;
+        const topic = document.getElementById('topic-input').value || '퇴원 후 주의사항';
+        const resultDiv = document.getElementById('handout-result');
+        
+        const prompt = `선택된 진단명: ${diagnosis}, 교육 주제: ${topic}에 대해 환자가 이해하기 쉽도록 간단하고 친절한 어조로 교육자료를 작성해줘. 물리치료사로서 환자에게 설명하는 것처럼, 긍정적이고 격려하는 내용을 포함해줘. 내용은 3-4개의 짧은 단락으로 구성하고, 각 단락 앞에 이모지를 붙여줘.`;
+        const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+        showLoading();
+        resultDiv.textContent = 'AI가 교육자료를 생성 중입니다...';
+        try {
+            const result = await callOurSecureApi(apiUrl, payload);
+            const text = result.candidates[0].content.parts[0].text;
+            resultDiv.textContent = text;
+        } catch (error) {
+            resultDiv.textContent = `오류가 발생했습니다: ${error.message}`;
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // AI Exercise Prescription
+    document.getElementById('suggest-progression-btn')?.addEventListener('click', async () => {
+        const diagnosis = document.getElementById('prog-diagnosis-select').value;
+        const level = document.getElementById('current-level-input').value;
+        const rpe = document.getElementById('last-rpe-input').value;
+        const resultDiv = document.getElementById('progression-result');
+
+        const prompt = `당신은 심장호흡물리치료 전문가입니다. 다음 환자 정보에 기반하여 다음 주 운동 세션을 위한 구체적인 운동처방(FITT-VP 원칙)을 추천해주세요. 추천 내용은 유산소 운동, 저항 운동, 유연성 운동을 모두 포함하고, 각 항목에 대한 구체적인 지침과 그 이유를 전문가 수준으로 상세히 설명해주세요. 결과는 마크다운 형식을 사용하여 명확하게 구분해주세요. 환자 정보: 진단명=${diagnosis}, 현재 운동 수준=${level} METs, 지난 세션 운동자각도(RPE 6-20)=${rpe}.`;
+        const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+        showLoading();
+        resultDiv.textContent = 'AI가 운동처방을 분석 중입니다...';
+        try {
+            const result = await callOurSecureApi(apiUrl, payload);
+            const text = result.candidates[0].content.parts[0].text;
+            resultDiv.textContent = text;
+        } catch (error) {
+            resultDiv.textContent = `오류가 발생했습니다: ${error.message}`;
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // AI Postural Drainage
+    document.getElementById('suggest-pd-btn')?.addEventListener('click', async () => {
+        const segment = document.getElementById('pd-segment-select').value;
+        const conditions = document.getElementById('pd-conditions-input').value || '특이사항 없음';
+        const resultDiv = document.getElementById('pd-result');
+
+        const prompt = `당신은 심장호흡물리치료 전문가입니다. 환자의 분비물 배출을 위해 '${segment}'에 대한 체위배담법(Postural Drainage) 자세를 추천해주세요. 환자의 특이사항은 '${conditions}'입니다. 다음 항목을 포함하여 전문가용으로 상세히 설명해주세요 (마크다운 형식 사용):
+1.  **자세 명칭:**
+2.  **자세 설정 방법:** (침대 각도, 환자 위치, 베개 사용법 등 단계별로 설명)
+3.  **타진/진동 적용 부위:** (해부학적 위치를 명확히 설명)
+4.  **주의사항 및 금기:** (입력된 환자 특이사항을 고려하여 특히 강조할 점 포함)`;
+        const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+        showLoading();
+        resultDiv.textContent = 'AI가 최적의 자세를 분석 중입니다...';
+        try {
+            const result = await callOurSecureApi(apiUrl, payload);
+            const text = result.candidates[0].content.parts[0].text;
+            resultDiv.textContent = text;
+        } catch (error) {
+            resultDiv.textContent = `오류가 발생했습니다: ${error.message}`;
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // AI Case Analyzer
+    document.getElementById('analyze-case-btn')?.addEventListener('click', async () => {
+        const caseSummary = document.getElementById('case-summary-input').value;
+        const resultDiv = document.getElementById('case-analysis-result');
+
+        if (!caseSummary.trim()) {
+            showAlert('환자 사례 요약을 입력해주세요.');
+            return;
+        }
+
+        const prompt = `당신은 숙련된 심장호흡물리치료사입니다. 다음 환자 사례를 ICF 모델(기능, 장애, 건강의 국제 분류)에 기반하여 분석해주세요. 신체 기능 및 구조, 활동, 참여 수준에서 주요 문제점을 식별하고, 이를 바탕으로 한 물리치료 평가 계획과 중재 목표를 제시해주세요. 결과는 명확한 마크다운 형식을 사용해주세요.\n\n사례: "${caseSummary}"`;
+        const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+        showLoading();
+        resultDiv.textContent = 'AI가 임상 사례를 분석 중입니다...';
+        try {
+            const result = await callOurSecureApi(apiUrl, payload);
+            const text = result.candidates[0].content.parts[0].text;
+            resultDiv.textContent = text;
+        } catch (error) {
+            resultDiv.textContent = `오류가 발생했습니다: ${error.message}`;
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // AI ABGA Interpreter
+    document.getElementById('interpret-abga-btn')?.addEventListener('click', async () => {
+        const ph = document.getElementById('abga-ph').value;
+        const paco2 = document.getElementById('abga-paco2').value;
+        const hco3 = document.getElementById('abga-hco3').value;
+        const resultDiv = document.getElementById('abga-result');
+
+        if (!ph || !paco2 || !hco3) {
+            showAlert('pH, PaCO₂, HCO₃⁻ 값을 모두 입력해주세요.');
+            return;
+        }
+
+        const prompt = `당신은 ABGA(동맥혈 가스 분석) 해석 전문가입니다. pH=${ph}, PaCO₂=${paco2} mmHg, HCO₃⁻=${hco3} mEq/L 값을 바탕으로 산-염기 불균형 상태를 단계별로 해석해주세요. 다음 4단계에 따라 명확하게 설명해주세요:\n1. 산증(Acidosis) 또는 알칼리증(Alkalosis) 여부 판단.\n2. 호흡성(Respiratory) 또는 대사성(Metabolic) 원인 규명.\n3. 보상(Compensation) 작용 여부 확인 (무보상, 부분보상, 완전보상).\n4. 종합적인 해석 및 물리치료적 고려사항 제시.`;
+        const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
+
+        showLoading();
+        resultDiv.textContent = 'AI가 ABGA 결과를 해석 중입니다...';
+        try {
+            const result = await callOurSecureApi(apiUrl, payload);
+            const text = result.candidates[0].content.parts[0].text;
+            resultDiv.textContent = text;
+        } catch (error) {
+            resultDiv.textContent = `오류가 발생했습니다: ${error.message}`;
+        } finally {
+            hideLoading();
+        }
+    });
+
+    // --- TTS FUNCTIONALITY ---
+    function base64ToArrayBuffer(base64) {
+        const binaryString = window.atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function pcmToWav(pcmData, sampleRate) {
+        const numChannels = 1;
+        const bytesPerSample = 2; // 16-bit PCM
+        const blockAlign = numChannels * bytesPerSample;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = pcmData.length * bytesPerSample;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, 16, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+
+        let offset = 44;
+        for (let i = 0; i < pcmData.length; i++, offset += 2) {
+            view.setInt16(offset, pcmData[i], true);
+        }
+
+        return new Blob([view], { type: 'audio/wav' });
+    }
+
+    document.querySelectorAll('.speaker-icon').forEach(icon => {
+        icon.addEventListener('click', async (e) => {
+            ttsPlayer.pause();
+            
+            const textToSpeak = e.target.closest('p').querySelector('.clinical-tip-text')?.textContent || '';
+            if (!textToSpeak) return;
+
+            const payload = {
+                contents: [{ parts: [{ text: `Say clearly and professionally: ${textToSpeak}` }] }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent`;
+
+            showLoading();
+            try {
+                const result = await callOurSecureApi(apiUrl, payload);
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                    if (sampleRateMatch) {
+                        const sampleRate = parseInt(sampleRateMatch[1], 10);
+                        const pcmData = base64ToArrayBuffer(audioData);
+                        const pcm16 = new Int16Array(pcmData);
+                        const wavBlob = pcmToWav(pcm16, sampleRate);
+                        const audioUrl = URL.createObjectURL(wavBlob);
+                        ttsPlayer.src = audioUrl;
+                        ttsPlayer.play();
+                    } else {
+                        throw new Error('Sample rate not found in mimeType.');
+                    }
+                } else {
+                    throw new Error('Invalid audio data received.');
+                }
+            } catch (error) {
+                console.error("TTS Error:", error);
+                showAlert(`음성 변환 중 오류가 발생했습니다: ${error.message}`);
+            } finally {
+                hideLoading();
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
+
